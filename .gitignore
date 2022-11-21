@@ -216,3 +216,6 @@ cython_debug/
 # testing stuff
 jwttesting.py
 notes.txt
+
+# Whatever
+.vscode
