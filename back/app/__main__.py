@@ -1,27 +1,26 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from .models import models
+from .DB_manipulations import db_work
+
 
 app = FastAPI()
 
-FakeDB = {
-    '1': 'Pretend that this is a link to pack',
-}
 
-
-@app.get('/main_page/')
+@app.get('/main_page/', response_model=models.RespModels.RM_MainPage)
 async def main_page():
-    return FakeDB
-
-
-@app.post('/main_page/')
-async def upload_game_pack():
-    '''
-    Doesn't really upload anything for now,
-    but I need to imagine the structure
-    '''
     return {'message': 'Done'}
 
 
-@app.get('/pack{pack_id}/')
-async def get_pack(pack_id: int):
-    return {'pack_id': FakeDB[pack_id]}
+@app.get('/api/packs/', response_model=models.RespModels.RM_Package_list)
+async def package_list_recievement():
+    return {'message': 'Done'}
+
+
+@app.post('/main_page/', response_model=models.RespModels.RM_Package_list)
+async def changing_package_page():
+    return {'message': 'Done'}
+
+
+@app.get('/main_page/', response_model=models.RespModels.RM_Package_list)
+async def filter_search_apply():
+    return {'message': 'Done'}

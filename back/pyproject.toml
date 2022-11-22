@@ -7,6 +7,7 @@ authors = [
 ]
 dependencies = [
     "FastAPI>=0.87.0",
+    "SQLalchemy>=1.4.44",
 ]
 requires-python = ">=3.11"
 license = {text = "MIT"}
