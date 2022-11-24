@@ -1,26 +1,41 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    "noEmit": true,
+    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/ui/*": ["components/*"],
+      "@/screens/*": ["components/*"],
+
+      "@/hooks/*": ["hooks/*"],
+      "@/shared/*": ["shared/*"],
+      "@/config/*": ["config/*"],
+      "@/services/*": ["services/*"],
+      "@/utils/*": ["utils/*"],
+      "@/store/*": ["store/*"],
+      "@/assets/*": ["assets/*"]
+    }
   },
   "include": [
-    "src"
-  ]
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/providers/AuthProvider.tsx",
+    "src/store/cardsApi.ts",
+    "src/components/ui/Button/Button.jsx"
+  ],
+  "exclude": ["node_modules"]
 }
