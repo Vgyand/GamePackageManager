@@ -1,11 +1,7 @@
-import Card from "components/ui/Card/Card";
+import Content from './Content/Content'
 
 const ContentWrapper = () => {
-  return (
-    <div>
-      <Card name="Packname" likesCount={2} downloadCount={4} />
-    </div>
-  );
-};
+	return <Content />
+}
 
-export default ContentWrapper;
+export default ContentWrapper
