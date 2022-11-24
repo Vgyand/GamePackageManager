@@ -14,19 +14,19 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "./src/",
+    "baseUrl": "src",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/ui/*": ["components/*"],
-      "@/screens/*": ["components/*"],
+      "components/*": ["components/*"],
+      "ui/*": ["components/*"],
+      "pages/*": ["pages/*"],
 
-      "@/hooks/*": ["hooks/*"],
-      "@/shared/*": ["shared/*"],
-      "@/config/*": ["config/*"],
-      "@/services/*": ["services/*"],
-      "@/utils/*": ["utils/*"],
-      "@/store/*": ["store/*"],
-      "@/assets/*": ["assets/*"]
+      "hooks/*": ["hooks/*"],
+      "shared/*": ["shared/*"],
+      "config/*": ["config/*"],
+      "services/*": ["services/*"],
+      "utils/*": ["utils/*"],
+      "store/*": ["store/*"],
+      "assets/*": ["assets/*"]
     }
   },
   "include": [

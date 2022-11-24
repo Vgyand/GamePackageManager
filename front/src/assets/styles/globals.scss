@@ -10,6 +10,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Montserrat", sans-serif;
+  background-image: url("../background.svg");
 }
 
 a {
@@ -22,7 +23,8 @@ a {
 }
 
 :root {
-  --primary-color: #e30b13;
+  --primary-color: #531a1a;
+  --apply: #197809;
 }
 
 input[type="file"],
