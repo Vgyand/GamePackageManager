@@ -1,4 +1,5 @@
 import ContentWrapper from 'components/ContentWrapper/ContentWrapper'
+import Filter from 'components/Filter/Filter'
 import Logo from 'components/Logo/Logo'
 
 import styles from './MainPage.module.scss'
@@ -13,7 +14,9 @@ const MainPage = () => {
 				<div className={styles.content}>
 					<ContentWrapper />
 				</div>
-				<div className={styles.filter}>filters</div>
+				<div className={styles.filter}>
+					<Filter />
+				</div>
 			</div>
 		</div>
 	)
