@@ -7,7 +7,7 @@ import styles from './MainPage.module.scss'
 const MainPage = () => {
 	return (
 		<div className="mx-auto max-w-5xl container">
-			<div className="grid grid-cols-12 mx-auto">
+			<div className={styles.wrapper}>
 				<div className={styles.logo}>
 					<Logo />
 				</div>

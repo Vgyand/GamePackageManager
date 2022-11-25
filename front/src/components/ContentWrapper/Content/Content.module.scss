@@ -1,3 +1,8 @@
 .content {
 	@apply grid grid-cols-2 mx-auto gap-x-20 gap-y-10 my-10;
 }
+@media (max-width: 525px) {
+	.content {
+		@apply grid grid-cols-1 mx-auto gap-x-20 gap-y-10 my-10;
+	}
+}

@@ -1,0 +1,10 @@
+.btn {
+	@apply px-2 py-1;
+	background-color: var(--apply);
+	color: white;
+	border-radius: 5px;
+	&:hover {
+		transition: ease 0.1s;
+		background-color: darken($color: #197809, $amount: 5%);
+	}
+}
