@@ -1,0 +1,26 @@
+.wrapper {
+	@apply grid grid-cols-12 mx-auto;
+}
+
+.logo {
+	@apply col-span-1 mx-auto;
+}
+.content {
+	@apply col-span-8 mx-auto;
+}
+.filter {
+	@apply col-span-3 mx-auto;
+}
+
+@media (max-width: 1024px) {
+	.logo {
+		@apply col-span-8 mx-auto order-1;
+		width: 50px;
+	}
+	.content {
+		@apply col-span-12 mx-auto order-3;
+	}
+	.filter {
+		@apply col-span-4 order-2;
+	}
+}

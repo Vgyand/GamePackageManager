@@ -1,0 +1,43 @@
+.card {
+	width: 200px;
+	height: 200px;
+	border-radius: 7px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	> .card_title {
+		text-align: center;
+		margin-top: 64px;
+		font-size: 25px;
+		line-height: 30px;
+		color: #000000;
+	}
+}
+.card_buttons {
+	display: flex;
+	height: 50px;
+	justify-content: space-between;
+	> button {
+		text-align: center;
+		margin: 0 auto;
+		color: white;
+		&:first-child {
+			background-color: var(--like);
+			width: 100%;
+			border-bottom-left-radius: 5px;
+		}
+		&:last-child {
+			background-color: var(--apply);
+			width: 100%;
+			border-bottom-right-radius: 5px;
+		}
+		&:hover {
+			transition: 0.1s ease;
+			background-color: #240672;
+		}
+	}
+}
+.card_button {
+	display: flex;
+	justify-content: center;
+}

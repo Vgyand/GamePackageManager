@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+@import 'react-redux-toastr/src/styles/index';
+
+html,
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Montserrat', sans-serif;
+	background-image: url('../background.svg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--primary-color: #531a1a;
+	--apply: #197809;
+	--like: #1f1f1f;
+}
+
+input[type='file'],
+input[type='file']::-webkit-file-upload-button {
+	@apply cursor-pointer focus:outline-none;
+}
+
+input:focus {
+	box-shadow: none !important;
+}
