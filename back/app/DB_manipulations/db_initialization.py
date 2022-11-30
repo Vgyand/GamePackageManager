@@ -1,28 +1,9 @@
-from .db_session import get_session, get_engine_from_yaml
+from .db import Pack
 from sqlalchemy import BigInteger, Boolean, Column, \
     ForeignKey, Integer, String, Enum, Float, \
     UniqueConstraint, and_, func, Date, DateTime
 # from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-
-
-engine = get_engine_from_yaml()
-
-
-base = declarative_base()
-
-base.metadata.create_all(engine)
-
-
-class Pack(base):
-    __tablename__ = 'Package'
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String)
-    description = Column(String)
-    download_link = Column(String)
-    like_count = Column(Integer)
-    download_count = Column(Integer)
 
 
 def insert_to_db(session, pack_name, pack_description, pack_dl_url):
