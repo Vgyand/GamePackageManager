@@ -11,8 +11,13 @@ const Search = () => {
 		setSearch(event.target.value)
 	}
 
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		console.log('submit')
+	}
+
 	return (
-		<div className={styles.input}>
+		<form onSubmit={handleSubmit} className={styles.input}>
 			<input
 				type="text"
 				id="message"
@@ -21,8 +26,8 @@ const Search = () => {
 				value={search}
 				placeholder={'Search'}
 			/>
-			<Button text={'Apply'} handler={() => console.log('jija')} />
-		</div>
+			<Button text={'Apply'} handler={() => console.log('jij')} />
+		</form>
 	)
 }
 

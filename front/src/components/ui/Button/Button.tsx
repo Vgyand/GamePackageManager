@@ -7,7 +7,7 @@ export interface IButton {
 
 const Button = ({ text, handler }: IButton) => {
 	return (
-		<button className={styles.btn} onClick={handler}>
+		<button className={styles.btn + ' ' + styles.btn3} onClick={handler}>
 			{text}
 		</button>
 	)
