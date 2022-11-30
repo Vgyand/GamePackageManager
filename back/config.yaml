@@ -1,0 +1,20 @@
+---
+# DB settings(Have to be the same as the ones in docker-compose)
+pg_user: postgres
+db_passwd: postgres
+pg_name: postgres
+
+# For admin user
+admin_login: admin
+admin_ps: possession
+
+# Stuff for main page
+background_photo_link: whatever
+logo_link: whatever
+link_A: whatever
+link_B: whatever
+link_C: whatever
+
+# Command to activate that shit
+
+# uvicorn app.main:app --reload
