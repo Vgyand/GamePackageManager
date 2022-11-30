@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .models import models
 from .DB_manipulations.db_initialization import insert_to_db, select_from_db
-from .DB_manipulations.db import db_init
+from .DB_manipulations.db import db_init, session_init
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -9,6 +9,8 @@ def app_factory():
     db_init()
     return FastAPI()
 
+
+SESSION = session_init()
 
 app = app_factory()
 
@@ -31,7 +33,7 @@ app.add_middleware(
 @app.get('/api/fill_the_db/')
 async def fill_db():
     for i in range(1, 10):
-        insert_to_db('Incurso', 'Hey', 'Incurso')
+        insert_to_db(SESSION, 'Incurso', 'Hey', 'Incurso')
     return {'message': 'Done'}
 
 
@@ -51,6 +53,6 @@ async def recive_list_of_packages(page: int = 0):
     '''
     Returns a list of packages
     '''
-    package_list = select_from_db()
+    package_list = select_from_db(SESSION)
     print(package_list)
     return package_list
