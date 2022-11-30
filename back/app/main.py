@@ -17,7 +17,7 @@ async def main_page():
 
 
 @app.get('/receive_packages/',
-         #  response_model=models.ListOfPackages,
+         response_model=models.ListOfPackages,
          )
 async def recive_list_of_packages(page: int = 0):
     '''

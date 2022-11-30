@@ -45,13 +45,15 @@ def select_from_db(**kwargs):
         packages_to_return = {}
 
         for pack in Packages:
-            packages_to_return[str(pack.id)] = [
-                {'name': str(pack.name)},
-                {'description': str(pack.description)},
-                {'download_link': str(pack.download_link)},
-                {'like_count': str(pack.like_count)},
-                {'download_count': str(pack.download_count)}, ]
+            packages_to_return[str(pack.id)] = {
+                'name': str(pack.name),
+                'description': str(pack.description),
+                'download_link': str(pack.download_link),
+                'like_count': str(pack.like_count),
+                'download_count': str(pack.download_count), }
         return packages_to_return
+    elif kwargs == 'package_name'
+
     return {'Message': 'DB is empty'}
 
 

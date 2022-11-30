@@ -13,9 +13,7 @@ class Package(BaseModel):
 class ListOfPackages(BaseModel):
     # list of packages client receives upon changing pages
     # Or applying filters
-    list_of_packages: dict[str, list[dict[str, str], dict[str, str],
-                                     dict[str, str], dict[str, str], dict[str, str]]] | None = None
-    # | None = None
+    __root__: dict[str, dict[str, str]]
 
 
 class EnteringMainPage(BaseModel):
