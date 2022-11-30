@@ -4,9 +4,13 @@ from .DB_manipulations.db_initialization import insert_to_db, select_from_db
 from .DB_manipulations.db import db_init
 from fastapi.middleware.cors import CORSMiddleware
 
-db_init()
 
-app = FastAPI()
+def app_factory():
+    db_init()
+    return FastAPI()
+
+
+app = app_factory()
 
 
 origins = [
