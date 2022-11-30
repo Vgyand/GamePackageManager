@@ -24,7 +24,7 @@ services:
     image: postgres:latest
     restart: unless-stopped
     volumes:
-      - postgres-data:/home/rerubis/postgres/15/data
+      - postgres-data:/etc/postgresql/15/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres

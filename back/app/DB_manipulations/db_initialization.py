@@ -52,7 +52,6 @@ def select_from_db(**kwargs):
                 'like_count': str(pack.like_count),
                 'download_count': str(pack.download_count), }
         return packages_to_return
-    elif kwargs == 'package_name'
 
     return {'Message': 'DB is empty'}
 
