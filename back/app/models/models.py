@@ -17,8 +17,6 @@ class ListOfPackages(BaseModel):
 
 
 class EnteringMainPage(BaseModel):
-    background_photo_link: str | None = None
-    logo_link: str | None = None
     link_A: str | None = None
     link_B: str | None = None
     link_C: str | None = None
