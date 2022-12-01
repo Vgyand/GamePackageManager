@@ -3,22 +3,32 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const packsApi = createApi({
 	reducerPath: 'packsApi',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'https://localhost:3001/api',
+		baseUrl: 'http://127.0.0.1:8000/api/',
 	}),
 	endpoints: (build) => ({
 		getAllPacks: build.query({
 			query: () => {
 				return {
 					method: 'GET',
-					url: '/',
+					url: 'receive_packages',
 					contentType: 'application/json',
 				}
 			},
 			transformResponse(response: any) {
-				return response.filter((el: any) => el)
+				return Object.keys(response).map((item: any) => response[item])
+			},
+		}),
+
+		getMainPage: build.query({
+			query: () => {
+				return {
+					method: 'GET',
+					url: 'main_page',
+					contentType: 'application/json',
+				}
 			},
 		}),
 	}),
 })
 
-export const { useGetAllPacksQuery } = packsApi
+export const { useGetAllPacksQuery, useGetMainPageQuery } = packsApi
