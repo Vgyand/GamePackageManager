@@ -5,6 +5,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	position: relative;
 	> .card_title {
 		text-align: center;
 		margin-top: 64px;
@@ -12,7 +13,30 @@
 		line-height: 30px;
 		color: #000000;
 	}
+	.card_info {
+		content: '';
+		width: 200px;
+		height: 150px;
+		background-color: white;
+		position: absolute;
+		border-top-left-radius: 7px;
+		border-top-right-radius: 7px;
+		display: none;
+		filter: brightness(75%);
+	}
+	&:hover {
+		.card_info {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	.active {
+		display: block;
+	}
 }
+
 .card_buttons {
 	display: flex;
 	height: 50px;

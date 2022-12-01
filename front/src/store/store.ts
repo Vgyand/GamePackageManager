@@ -17,7 +17,10 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { packsApi } from './packsApi'
+
 const rootReducer = combineReducers({
+	[packsApi.reducerPath]: packsApi.reducer,
 	toastr: toastrReducer,
 })
 const persistConfig = {
@@ -34,7 +37,7 @@ export const store = configureStore({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}),
+		}).concat(packsApi.middleware),
 	devTools: true,
 })
 
