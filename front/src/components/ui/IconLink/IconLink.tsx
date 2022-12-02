@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom'
 
 import styles from './IconLink.module.scss'
 
-const IconLink = ({ url, img }: any) => {
+interface Icon {
+	url: string
+	img: string
+}
+
+const IconLink = ({ url, img }: Icon) => {
 	return (
 		<div className={styles.nav_icon}>
 			<Link to={url}>
