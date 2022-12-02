@@ -13,7 +13,7 @@ class Package(BaseModel):
 class ListOfPackages(BaseModel):
     # list of packages client receives upon changing pages
     # Or applying filters
-    __root__: dict[str, dict[str, str]]
+    __root__: list[dict[str, str]]
 
 
 class EnteringMainPage(BaseModel):
