@@ -17,9 +17,11 @@ class ListOfPackages(BaseModel):
 
 
 class EnteringMainPage(BaseModel):
-    link_A: str | None = None
-    link_B: str | None = None
-    link_C: str | None = None
+    side_link: str | None = None
 
     # starting_package_list: ListOfPackages | None = None
     #  list of packages client receives upon loading the main page
+
+
+class Message(BaseModel):
+    __root__: dict[str, str]
