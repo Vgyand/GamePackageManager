@@ -3,19 +3,18 @@ from sqlalchemy import BigInteger, Boolean, Column, \
     ForeignKey, Integer, String, Enum, Float, \
     UniqueConstraint, and_, func, Date, DateTime
 # from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
 
 def insert_to_db(session, pack_name, pack_description, pack_dl_url):
     '''
     Inserting package into DB
     '''
-    print('we got here1')
     Pack_to_insert = Pack(
-        name=pack_name, description=pack_description, download_link=pack_dl_url, like_count=0, download_count=0)
-    print('we got here2')
+        name=pack_name, description=pack_description,
+        download_link=pack_dl_url, like_count=0, download_count=0)
     session.add(Pack_to_insert)
     session.commit()
+    return {'message': 'Done'}
 
 
 def select_from_db(session, **kwargs):
@@ -39,17 +38,36 @@ def select_from_db(session, **kwargs):
     return {'Message': 'DB is empty'}
 
 
-def delete_from_db(session, pack_name):
+def delete_from_db(session, pack_id):
     '''
-    Deleting packages into DB
+    Deleting packages from the DB
+    '''
+    Packages = session.query(Pack)
+    obj_to_remove = Pack()
+
+    for pack in Packages:
+        if pack.id == pack_id:
+            obj_to_remove.id = pack.id
+            obj_to_remove.name = pack.name
+            obj_to_remove.description = pack.description
+            obj_to_remove.download_link = pack.download_link
+            obj_to_remove.like_count = pack.like_count
+            obj_to_remove.download_count = pack.download_count
+            session.delete(obj_to_remove)
+            session.commit()
+            return {'message': 'Done'}
+    return {'message': 'The package not found'}
+
+
+def add_like_to_package(session, pack_id):
+    '''
+    Adds like to package specified by id
     '''
     pass
 
 
-def adjust_package_in_db(session, pack_name, new_like, new_download):
+def add_download_to_package(session, pack_id):
     '''
-    Changes the information of specified package in DB
-    Like updating the like count or download count
-    Depending on the recived values
+    Adds download to package specified by id
     '''
     pass
