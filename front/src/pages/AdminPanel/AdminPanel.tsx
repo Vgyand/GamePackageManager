@@ -1,5 +1,6 @@
 import React from 'react'
 
+import AdminTable from 'components/AdminTable/AdminTable'
 import Filter from 'components/Filter/Filter'
 import Logo from 'components/Logo/Logo'
 
@@ -12,7 +13,9 @@ const AdminPanel = () => {
 				<div className={styles.logo}>
 					<Logo />
 				</div>
-				<div className={styles.content}>Content</div>
+				<div className={styles.content}>
+					<AdminTable />
+				</div>
 				<div className={styles.filter}>
 					<Filter />
 				</div>

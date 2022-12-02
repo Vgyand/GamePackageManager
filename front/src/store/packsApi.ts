@@ -10,12 +10,9 @@ export const packsApi = createApi({
 			query: () => {
 				return {
 					method: 'GET',
-					url: 'receive_packages',
+					url: 'packs',
 					contentType: 'application/json',
 				}
-			},
-			transformResponse(response: any) {
-				return Object.keys(response).map((item: any) => response[item])
 			},
 		}),
 
