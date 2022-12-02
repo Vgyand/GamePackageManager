@@ -24,15 +24,18 @@ def select_from_db(session, **kwargs):
     '''
     if len(kwargs) == 0:
         Packages = session.query(Pack)
-        packages_to_return = {}
+        packages_to_return = []
 
         for pack in Packages:
-            packages_to_return[str(pack.id)] = {
-                'name': str(pack.name),
-                'description': str(pack.description),
-                'download_link': str(pack.download_link),
-                'like_count': str(pack.like_count),
-                'download_count': str(pack.download_count), }
+            pack_to_add = {}
+            pack_to_add['id'] = str(pack.id)
+            pack_to_add['name'] = str(pack.name)
+            pack_to_add['description'] = str(pack.description)
+            pack_to_add['download_link'] = str(pack.download_link)
+            pack_to_add['like_count'] = str(pack.like_count)
+            pack_to_add['download_count'] = str(pack.download_count)
+            print(pack_to_add)
+            packages_to_return.append(pack_to_add)
         return packages_to_return
 
     return {'Message': 'DB is empty'}
@@ -43,17 +46,9 @@ def delete_from_db(session, pack_id):
     Deleting packages from the DB
     '''
     Packages = session.query(Pack)
-    obj_to_remove = Pack()
-
     for pack in Packages:
         if pack.id == pack_id:
-            obj_to_remove.id = pack.id
-            obj_to_remove.name = pack.name
-            obj_to_remove.description = pack.description
-            obj_to_remove.download_link = pack.download_link
-            obj_to_remove.like_count = pack.like_count
-            obj_to_remove.download_count = pack.download_count
-            session.delete(obj_to_remove)
+            session.delete(pack)
             session.commit()
             return {'message': 'Done'}
     return {'message': 'The package not found'}

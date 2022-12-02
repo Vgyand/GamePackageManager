@@ -4,15 +4,12 @@ pg_user: postgres
 db_passwd: postgres
 pg_name: postgres
 
-# For admin user
+# For admin user|not implemented yet
 admin_login: admin
 admin_ps: possession
 
 # Stuff for main page
-link_A: whatever
-link_B: whatever
-link_C: whatever
+side_link: whatever
 
 # Command to activate that shit
-
 # uvicorn app.main:app --reload
