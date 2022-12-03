@@ -6,6 +6,7 @@ class create_package(BaseModel):
     name: str
     description: str
     download_link: str
+    size: float
 
 
 class delete_package(BaseModel):

@@ -3,6 +3,8 @@ from .models import resp_models, req_models
 from .DB_manipulations.db_initialization import insert_to_db, select_from_db, delete_from_db
 from .DB_manipulations.db import db_init, session_init
 from fastapi.middleware.cors import CORSMiddleware
+from .etc.randomstring import get_random_string
+import random
 
 
 def app_factory():
@@ -33,7 +35,13 @@ app.add_middleware(
 @app.get('/api/fill_the_db/')
 async def fill_db():
     for i in range(1, 40):
-        insert_to_db(SESSION, 'Incurso', 'Hey', 'Incurso')
+        name = get_random_string()
+        desc = get_random_string()
+        link = f'https://{get_random_string()}'
+        like = random.randint(1, 100)
+        download = random.randint(1, 100)
+        size = round(random.uniform(1.0, 50.0), 2)
+        insert_to_db(SESSION, name, desc, link, like, download, size)
     return {'message': 'Done'}
 
 
@@ -49,12 +57,29 @@ async def main_page():
 @app.get('/api/packs/',
          response_model=resp_models.ListOfPackages,
          )
-async def recive_list_of_packages(page: int = 0):
+async def recive_list_of_packages(
+    likes: str = None,
+    downloads: str = None,
+    search: str = None,
+    size: str = None,
+):
     '''
     Returns a list of packages
     '''
+    if likes:
+        package_list = select_from_db(SESSION, lik=likes)
+        return package_list
+    if downloads:
+        package_list = select_from_db(SESSION, down=downloads)
+        return package_list
+    if search:
+        package_list = select_from_db(SESSION, sea=search)
+        return package_list
+    if size:
+        package_list = select_from_db(SESSION, siz=size)
+        return package_list
+
     package_list = select_from_db(SESSION)
-    print(package_list)
     return package_list
 
 
@@ -68,7 +93,9 @@ async def create_package(pack_to_create: req_models.create_package):
         SESSION,
         pack_to_create.name,
         pack_to_create.description,
-        pack_to_create.download_link)
+        pack_to_create.download_link,
+        0, 0,
+        pack_to_create.size,)
 
     return result
 
@@ -76,7 +103,7 @@ async def create_package(pack_to_create: req_models.create_package):
 @app.delete('/api/packs/', response_model=resp_models.Message)
 async def delete_package(pack_id: req_models.delete_package):
     '''
-    Receives id. 
+    Receives id
     Deletes pack with this id
     '''
     result = delete_from_db(SESSION, pack_id)
