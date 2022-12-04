@@ -1,41 +1,33 @@
 import React from 'react'
 
-import close from 'assets/icons/close.png'
+import AdminTableItem from 'components/ui/AdminTableItem/AdminTableItem'
+
+import { useAppSelector } from 'hooks/hooks'
 
 import { useGetAllPacksQuery } from 'store/packsApi'
 
 import styles from './AdminTable.module.scss'
 
 const AdminTable = () => {
-	const { data = [], isLoading } = useGetAllPacksQuery('')
+	const filter = useAppSelector((state) => state.filter)
+	const { data = [], isLoading } = useGetAllPacksQuery(filter)
 	console.log(data)
 	return (
 		<div>
 			<div className={styles.content}>
+				<button>post a new pack</button>
 				{isLoading ? (
 					'load'
 				) : (
 					<>
 						{data.map((pack: any) => (
-							<div
+							<AdminTableItem
 								key={pack.id}
-								className={styles.pack_table}
-								style={{
-									backgroundColor: `${pack.id % 2 == 0 ? 'grey' : 'white'}`,
-								}}
-							>
-								<div>id: {pack.id}</div>
-								<div>name: {pack.name}</div>
-								<div>download count: {pack.download_count}</div>
-								<div>likes: {pack.like_count}</div>
-								<button>
-									<img
-										src={close}
-										alt="delete"
-										className={styles.pack_table__img}
-									/>
-								</button>
-							</div>
+								id={pack.id}
+								name={pack.name}
+								likeCount={pack.like_count}
+								downloadCount={pack.download_count}
+							/>
 						))}
 					</>
 				)}

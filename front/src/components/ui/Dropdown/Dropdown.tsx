@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from 'react'
 
+import { useAppDispatch } from 'hooks/hooks'
+
+import { onFilterSelectChange } from 'store/filterSlice'
+
 import styles from './Dropdown.module.scss'
 
 export interface DropdownTypes {
@@ -15,13 +19,22 @@ const Dropdown = ({
 	setSelectedOption,
 	inputTitle,
 }: DropdownTypes) => {
+	const dispatch = useAppDispatch()
+	const selectOptionHandler = (event: any) => {
+		setSelectedOption(event.target.value)
+		const obj = {
+			val: event.target.value.split('_')[0],
+			mod: event.target.value.split('_')[1],
+		}
+		dispatch(onFilterSelectChange(obj))
+	}
 	return (
 		<>
 			<p className={styles.inputTitle}>{inputTitle}</p>
 			<label className={styles.dropdown_label}>
 				<select
 					value={selectedOption}
-					onChange={(e) => setSelectedOption(e.target.value)}
+					onChange={selectOptionHandler}
 					className={styles.dropdown_select}
 				>
 					{options.map((o) => (
