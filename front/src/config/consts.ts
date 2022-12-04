@@ -4,7 +4,10 @@ export const cardsOnPage = 25
 
 export const sort: { value: string; label: string }[] = [
 	{ value: '', label: '' },
-	{ value: 'date', label: 'По дате создания' },
-	{ value: 'like', label: 'По кол-ву лайков' },
-	{ value: 'download', label: 'По кол-ву скачиваний' },
+	{ value: 'likes_dec', label: 'По кол-ву лайков dec' },
+	{ value: 'likes_inc', label: 'По кол-ву лайков inc' },
+	{ value: 'downloads_dec', label: 'По кол-ву скачиваний dec' },
+	{ value: 'downloads_inc', label: 'По кол-ву скачиваний inc' },
+	{ value: 'weight_dec', label: 'По весу dec' },
+	{ value: 'weight_inc', label: 'По весу inc' },
 ]

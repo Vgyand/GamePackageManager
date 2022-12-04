@@ -22,6 +22,7 @@ const Filter = () => {
 					options={sort}
 					selectedOption={filter}
 					setSelectedOption={setFilter}
+					inputTitle={'Select a filter'}
 				/>
 			</div>
 			<div className={styles.filterIcon} onClick={() => setOpen(!open)}>
@@ -40,6 +41,7 @@ const Filter = () => {
 					options={sort}
 					selectedOption={filter}
 					setSelectedOption={setFilter}
+					inputTitle={'Select a filter'}
 				/>
 			</div>
 		</div>

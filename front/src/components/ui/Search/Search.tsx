@@ -1,32 +1,27 @@
-import { useState } from 'react'
+import { useAppDispatch, useAppSelector } from 'hooks/hooks'
 
-import Button from '../Button/Button'
+import { onFilterSearchChange } from 'store/filterSlice'
 
 import styles from './Search.module.scss'
 
 const Search = () => {
-	const [search, setSearch] = useState('')
+	const search = useAppSelector((state) => state.filter.search)
+	const dispatch = useAppDispatch()
 
 	const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSearch(event.target.value)
-	}
-
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
-		console.log('submit')
+		dispatch(onFilterSearchChange(event.target.value))
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className={styles.input}>
+		<form className={styles.input}>
 			<input
 				type="text"
 				id="message"
 				name="message"
 				onChange={onSearchChange}
-				value={search}
 				placeholder={'Search'}
+				value={search}
 			/>
-			<Button text={'Apply'} handler={() => console.log('jij')} />
 		</form>
 	)
 }
