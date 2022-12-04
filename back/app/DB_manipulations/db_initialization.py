@@ -30,7 +30,7 @@ def select_from_db(session, **kwargs):
     packages_to_return = []
 
     if len(kwargs) == 0:
-        Packages = session.query(Pack)
+        Packages = session.query(Pack).order_by(Pack.id).all()
 
     keys = kwargs.keys()
     if 'lik' in keys:
@@ -94,11 +94,24 @@ def add_like_to_package(session, pack_id):
     '''
     Adds like to package specified by id
     '''
-    pass
+    Packages = session.query(Pack).filter(Pack.id == pack_id).all()
+    if Packages:
+        for pack in Packages:
+
+            pack.like_count += 1
+            session.commit()
+        return {'message': 'Done'}
+    return {'message': 'Wrong Id'}
 
 
 def add_download_to_package(session, pack_id):
     '''
     Adds download to package specified by id
     '''
-    pass
+    Packages = session.query(Pack).filter(Pack.id == pack_id).all()
+    if Packages:
+        for pack in Packages:
+            pack.download_count += 1
+            session.commit()
+        return {'message': 'Done'}
+    return {'message': 'Wrong Id'}

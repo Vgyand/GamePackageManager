@@ -1,10 +1,11 @@
+import random
+from .etc.randomstring import get_random_string
+from fastapi.middleware.cors import CORSMiddleware
+from .DB_manipulations.db import db_init, session_init
 from fastapi import FastAPI
 from .models import resp_models, req_models
-from .DB_manipulations.db_initialization import insert_to_db, select_from_db, delete_from_db
-from .DB_manipulations.db import db_init, session_init
-from fastapi.middleware.cors import CORSMiddleware
-from .etc.randomstring import get_random_string
-import random
+from .DB_manipulations.db_initialization import insert_to_db, select_from_db, \
+    delete_from_db, add_like_to_package, add_download_to_package
 
 
 def app_factory():
@@ -100,28 +101,30 @@ async def create_package(pack_to_create: req_models.create_package):
     return result
 
 
-@app.delete('/api/packs/', response_model=resp_models.Message)
-async def delete_package(pack_id: req_models.delete_package):
+@app.delete('/api/packs/delete/{id}', response_model=resp_models.Message)
+async def delete_package(id):
     '''
     Receives id
     Deletes pack with this id
     '''
-    result = delete_from_db(SESSION, pack_id)
+    result = delete_from_db(SESSION, id)
     return result
 
 
-@app.put('/api/packs/like/', response_model=resp_models.Message)
-async def add_like_to_package(pack_id: req_models.add_like_down):
-    pass
+@app.put('/api/packs/like/{pack_id}', response_model=resp_models.Message)
+async def add_like_to_pack(pack_id: int):
+    result = add_like_to_package(SESSION, pack_id)
+    return result
 
 
-@app.put('/api/packs/download/', response_model=resp_models.Message)
-async def add_download_to_package(pack_id: req_models.add_like_down):
-    pass
+@app.put('/api/packs/download/{pack_id}', response_model=resp_models.Message)
+async def add_download_to_pack(pack_id: int):
+    result = add_download_to_package(SESSION, pack_id)
+    return result
 
 
 @app.put('/api/packs/')
 async def modify_package():
     '''
-    Whatever. Not implemented yet. 
+    Whatever. Not implemented yet.
     '''

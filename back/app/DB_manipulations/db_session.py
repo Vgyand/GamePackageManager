@@ -1,20 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
-import yaml
-
-
-def read_config_yaml():
-    """
-    Parses config file to get
-    the password, user, dbname
-    """
-    with open('config.yaml', 'r') as stream:
-        try:
-            parsed_yaml = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return parsed_yaml
+from ..etc.readyaml import read_config_yaml
 
 
 def get_engine(user, passwd, db):
