@@ -30,31 +30,35 @@ def select_from_db(session, dic):
 
     packages_to_return = []
 
-    Packages = session.query(Pack).order_by(Pack.id)
+    Packages = session.query(Pack)
 
     if dic['likes'] is not None:
         if dic['likes'] == 'inc':
             Packages = Packages.order_by(Pack.like_count)
 
         if dic['likes'] == 'dec':
+            print('we got here')
             Packages = Packages.order_by(Pack.like_count.desc())
 
-    if dic['downloads'] is not None:
+    elif dic['downloads'] is not None:
         if dic['downloads'] == 'inc':
             Packages = Packages.order_by(Pack.download_count)
         if dic['downloads'] == 'dec':
             Packages = Packages.order_by(Pack.download_count.desc())
 
-    if dic['size'] is not None:
+    elif dic['size'] is not None:
         if dic['size'] == 'inc':
             Packages = Packages.order_by(Pack.package_size)
         if dic['size'] == 'dec':
             Packages = Packages.order_by(Pack.package_size.desc())
 
     if dic['search'] is not None:
-        Packages = Packages.filter(Pack.name == dic['search'])
+        Packages = Packages.filter(Pack.name.like(f"%{str(dic['search'])}%"))
 
-    Packages = Packages.all()
+    for non in dic.values():
+        if non is not None:
+            break
+        Packages = Packages.order_by(Pack.id)
 
     for pack in Packages:
         pack_to_add = {}
