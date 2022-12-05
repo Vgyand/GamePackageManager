@@ -5,7 +5,8 @@ from sqlalchemy import BigInteger, Boolean, Column, \
 # from sqlalchemy.orm import relationship
 
 
-def insert_to_db(session, pack_name, pack_description, pack_dl_url, like, download, pack_size):
+def insert_to_db(session, pack_name, pack_description,
+                 pack_dl_url, like, download, pack_size):
     '''
     Inserting package into DB
     '''
@@ -21,7 +22,7 @@ def insert_to_db(session, pack_name, pack_description, pack_dl_url, like, downlo
     return {'message': 'Done'}
 
 
-def select_from_db(session, **kwargs):
+def select_from_db(session, dic):
     '''
     Selecting packages from DB depending on the requirements
     kwargs can be: package_name, like_count, download_count, page_number
@@ -29,38 +30,31 @@ def select_from_db(session, **kwargs):
 
     packages_to_return = []
 
-    if len(kwargs) == 0:
-        Packages = session.query(Pack).order_by(Pack.id).all()
+    Packages = session.query(Pack).order_by(Pack.id)
 
-    keys = kwargs.keys()
-    if 'lik' in keys:
-        if kwargs['lik'] == 'inc':
-            Packages = session.query(
-                Pack).order_by(Pack.like_count).all()
+    if dic['likes'] is not None:
+        if dic['likes'] == 'inc':
+            Packages = Packages.order_by(Pack.like_count)
 
-        if kwargs['lik'] == 'dec':
-            Packages = session.query(
-                Pack).order_by(Pack.like_count.desc()).all()
+        if dic['likes'] == 'dec':
+            Packages = Packages.order_by(Pack.like_count.desc())
 
-    if 'down' in keys:
-        if kwargs['down'] == 'inc':
-            Packages = session.query(
-                Pack).order_by(Pack.download_count).all()
-        if kwargs['down'] == 'dec':
-            Packages = session.query(
-                Pack).order_by(Pack.download_count.desc()).all()
+    if dic['downloads'] is not None:
+        if dic['downloads'] == 'inc':
+            Packages = Packages.order_by(Pack.download_count)
+        if dic['downloads'] == 'dec':
+            Packages = Packages.order_by(Pack.download_count.desc())
 
-    if 'siz' in keys:
-        if kwargs['siz'] == 'inc':
-            Packages = session.query(
-                Pack).order_by(Pack.package_size).all()
-        if kwargs['siz'] == 'dec':
-            Packages = session.query(
-                Pack).order_by(Pack.package_size.desc()).all()
+    if dic['size'] is not None:
+        if dic['size'] == 'inc':
+            Packages = Packages.order_by(Pack.package_size)
+        if dic['size'] == 'dec':
+            Packages = Packages.order_by(Pack.package_size.desc())
 
-    if 'sea' in keys:
-        Packages = session.query(
-            Pack).filter(Pack.name == kwargs['sea']).all()
+    if dic['search'] is not None:
+        Packages = Packages.filter(Pack.name == dic['search'])
+
+    Packages = Packages.all()
 
     for pack in Packages:
         pack_to_add = {}

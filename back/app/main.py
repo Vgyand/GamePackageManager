@@ -67,20 +67,13 @@ async def recive_list_of_packages(
     '''
     Returns a list of packages
     '''
-    if likes:
-        package_list = select_from_db(SESSION, lik=likes)
-        return package_list
-    if downloads:
-        package_list = select_from_db(SESSION, down=downloads)
-        return package_list
-    if search:
-        package_list = select_from_db(SESSION, sea=search)
-        return package_list
-    if size:
-        package_list = select_from_db(SESSION, siz=size)
-        return package_list
+    dic = {'likes': likes,
+           'downloads':  downloads,
+           'search': search,
+           'size': size
+           }
 
-    package_list = select_from_db(SESSION)
+    package_list = select_from_db(SESSION, dic)
     return package_list
 
 
