@@ -49,7 +49,7 @@ export const packsApi = createApi({
 			query: ({ id }: any) => {
 				return {
 					method: 'delete',
-					url: `packs/${id}`,
+					url: `packs/delete/${id}`,
 					contentType: 'application/json',
 				}
 			},

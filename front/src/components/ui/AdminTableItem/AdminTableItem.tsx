@@ -1,8 +1,12 @@
 import close from 'assets/icons/close.png'
 
+import { useDeletePackMutation } from 'store/packsApi'
+
 import styles from './AdminTableItem.module.scss'
 
 const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
+	const [deletePost, response] = useDeletePackMutation()
+	console.log(id)
 	return (
 		<tr
 			key={id}
@@ -15,7 +19,12 @@ const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
 			<td> {downloadCount}</td>
 			<td> {likeCount}</td>
 			<button>
-				<img src={close} alt="delete" className={styles.pack_table__img} />
+				<img
+					src={close}
+					alt="delete"
+					onClick={() => deletePost({ id })}
+					className={styles.pack_table__img}
+				/>
 			</button>
 		</tr>
 	)
