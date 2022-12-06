@@ -19,7 +19,6 @@ const filterSlice = createSlice({
 	initialState,
 	reducers: {
 		onFilterSearchChange(state, action: PayloadAction<string>) {
-			console.log(action.payload.search)
 			state.search = action.payload
 		},
 		onFilterSelectChange(state, action: any) {

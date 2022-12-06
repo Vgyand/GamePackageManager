@@ -25,6 +25,35 @@ export const packsApi = createApi({
 				}
 			},
 		}),
+		createNewPack: build.mutation({
+			query: (pack: any) => {
+				return {
+					method: 'post',
+					url: 'packs',
+					contentType: 'application/json',
+					body: pack,
+				}
+			},
+		}),
+		updatePack: build.mutation({
+			query: ({ id, ...rest }: any) => {
+				return {
+					method: 'put',
+					url: `packs/${id}`,
+					contentType: 'application/json',
+					body: rest,
+				}
+			},
+		}),
+		deletePack: build.mutation({
+			query: ({ id }: any) => {
+				return {
+					method: 'delete',
+					url: `packs/${id}`,
+					contentType: 'application/json',
+				}
+			},
+		}),
 		getMainPage: build.query({
 			query: () => {
 				return {
@@ -37,4 +66,10 @@ export const packsApi = createApi({
 	}),
 })
 
-export const { useGetAllPacksQuery, useGetMainPageQuery } = packsApi
+export const {
+	useGetAllPacksQuery,
+	useGetMainPageQuery,
+	useCreateNewPackMutation,
+	useUpdatePackMutation,
+	useDeletePackMutation,
+} = packsApi
