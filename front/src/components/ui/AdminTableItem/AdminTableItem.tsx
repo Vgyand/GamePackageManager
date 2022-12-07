@@ -6,10 +6,22 @@ import { useDeletePackMutation } from 'store/packsApi'
 
 import styles from './AdminTableItem.module.scss'
 
-const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
+const AdminTableItem = ({
+	id,
+	name,
+	downloadCount,
+	likeCount,
+	index,
+	refetch,
+}: any) => {
 	const [openName, setOpenName] = useState(false)
 	const [deletePost] = useDeletePackMutation()
 	console.log(id)
+
+	const deleteHandler = () => {
+		deletePost({ id })
+		refetch()
+	}
 	return (
 		<tr
 			key={id}
@@ -36,7 +48,7 @@ const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
 				<img
 					src={close}
 					alt="delete"
-					onClick={() => deletePost({ id })}
+					onClick={deleteHandler}
 					className={styles.pack_table__img}
 				/>
 			</button>

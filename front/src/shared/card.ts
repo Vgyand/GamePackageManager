@@ -4,4 +4,5 @@ export interface ICard {
 	downloadCount: number
 	likesCount: number
 	color: string
+	refetch: any
 }

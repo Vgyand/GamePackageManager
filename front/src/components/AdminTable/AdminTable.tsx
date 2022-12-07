@@ -13,7 +13,11 @@ const AdminTable = () => {
 	const [openForm, setOpenForm] = useState(false)
 	const filter = useAppSelector((state) => state.filter)
 
-	const { data = [], isLoading } = useGetAllPacksQuery(filter, {
+	const {
+		data = [],
+		isLoading,
+		refetch,
+	} = useGetAllPacksQuery(filter, {
 		refetchOnMountOrArgChange: true,
 	})
 	console.log(data)
@@ -40,6 +44,7 @@ const AdminTable = () => {
 						<>
 							{data.map((pack: any, index: number) => (
 								<AdminTableItem
+									refetch={refetch}
 									index={index}
 									key={pack.id}
 									id={pack.id}

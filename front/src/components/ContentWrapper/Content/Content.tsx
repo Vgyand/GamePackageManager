@@ -3,17 +3,9 @@ import randomColor from 'randomcolor'
 import Card from 'components/ui/Card/Card'
 import SkeletonLoader from 'components/ui/SkeletonLoader/SkeletonLoader'
 
-import { useAppSelector } from 'hooks/hooks'
-
-import { useGetAllPacksQuery } from 'store/packsApi'
-
 import styles from './Content.module.scss'
 
-const Content = () => {
-	const filter = useAppSelector((state) => state.filter)
-
-	const { data, isLoading, isError } = useGetAllPacksQuery(filter)
-
+const Content = ({ data, isError, refetch, isLoading }: any) => {
 	if (isError) return <div>An error has occurred!</div>
 
 	return (
@@ -24,6 +16,7 @@ const Content = () => {
 				<>
 					{data.map((pack: any, index: number) => (
 						<Card
+							refetch={refetch}
 							id={pack.id}
 							key={index}
 							name={pack.name}

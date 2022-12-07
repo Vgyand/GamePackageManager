@@ -12,15 +12,22 @@ import { useDownloadPackMutation, useLikePackMutation } from 'store/packsApi'
 
 import styles from './Card.module.scss'
 
-const Card = ({ id, name, downloadCount, likesCount, color }: ICard) => {
+const Card = ({
+	id,
+	name,
+	downloadCount,
+	likesCount,
+	color,
+	refetch,
+}: ICard) => {
 	const flag = useAppSelector((state) => state.like[id]?.flag)
 	const [likeApi] = useLikePackMutation()
 	const [downloadApi] = useDownloadPackMutation()
 	const [likes, setLikes] = useState(likesCount)
 	const [downloads, setDownloads] = useState(downloadCount)
 	const dispatch = useAppDispatch()
-
-	const likeHandler = () => {
+	const likeHandler = async () => {
+		await likeApi({ id })
 		setLikes(+likes + 1)
 		dispatch(
 			onLiked({
@@ -29,12 +36,14 @@ const Card = ({ id, name, downloadCount, likesCount, color }: ICard) => {
 				value: +likes + 1,
 			})
 		)
-		likeApi({ id })
+
+		refetch()
 	}
 
 	const downloadHandler = () => {
 		setDownloads(+downloads + 1)
 		downloadApi({ id })
+		refetch()
 	}
 
 	return (

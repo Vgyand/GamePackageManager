@@ -9,7 +9,6 @@ const AdminPostForm = () => {
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm()
 
