@@ -1,11 +1,42 @@
+import { useState } from 'react'
+
+import { useAppDispatch, useAppSelector } from 'hooks/hooks'
+
 import { ICard } from 'shared/card'
 
 import download from 'assets/icons/download.png'
-import likes from 'assets/icons/heart.svg'
+import like from 'assets/icons/heart.svg'
+
+import { onLiked } from 'store/likedSlice'
+import { useDownloadPackMutation, useLikePackMutation } from 'store/packsApi'
 
 import styles from './Card.module.scss'
 
-const Card = ({ name, downloadCount, likesCount, color }: ICard) => {
+const Card = ({ id, name, downloadCount, likesCount, color }: ICard) => {
+	const flag = useAppSelector((state) => state.like[id]?.flag)
+	const [likeApi] = useLikePackMutation()
+	const [downloadApi] = useDownloadPackMutation()
+	const [likes, setLikes] = useState(likesCount)
+	const [downloads, setDownloads] = useState(downloadCount)
+	const dispatch = useAppDispatch()
+
+	const likeHandler = () => {
+		setLikes(+likes + 1)
+		dispatch(
+			onLiked({
+				id: +id,
+				flag: true,
+				value: +likes + 1,
+			})
+		)
+		likeApi({ id })
+	}
+
+	const downloadHandler = () => {
+		setDownloads(+downloads + 1)
+		downloadApi({ id })
+	}
+
 	return (
 		<div className={styles.card} style={{ backgroundColor: color }}>
 			<div className={styles.card_info} style={{ backgroundColor: color }}>
@@ -13,14 +44,23 @@ const Card = ({ name, downloadCount, likesCount, color }: ICard) => {
 			</div>
 			<h2 className={styles.card_title}>{name}</h2>
 			<div className={styles.card_buttons}>
-				<button>
+				{flag ? (
+					<button disabled={flag} onClick={likeHandler}>
+						<div className={styles.card_button}>
+							<img src={like} alt="heart" /> : {likes}
+						</div>
+					</button>
+				) : (
+					<button onClick={likeHandler}>
+						<div className={styles.card_button}>
+							<img src={like} alt="heart" /> : {likes}
+						</div>
+					</button>
+				)}
+
+				<button onClick={downloadHandler}>
 					<div className={styles.card_button}>
-						<img src={likes} alt="heart" /> :{' ' + likesCount}
-					</div>
-				</button>
-				<button>
-					<div className={styles.card_button}>
-						<img src={download} alt="heart" /> :{' ' + downloadCount}
+						<img src={download} alt="heart" /> :{downloads}
 					</div>
 				</button>
 			</div>

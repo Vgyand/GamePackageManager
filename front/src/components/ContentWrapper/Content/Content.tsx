@@ -11,7 +11,7 @@ import styles from './Content.module.scss'
 
 const Content = () => {
 	const filter = useAppSelector((state) => state.filter)
-	console.log(filter)
+
 	const { data, isLoading, isError } = useGetAllPacksQuery(filter)
 
 	if (isError) return <div>An error has occurred!</div>
@@ -24,6 +24,7 @@ const Content = () => {
 				<>
 					{data.map((pack: any, index: number) => (
 						<Card
+							id={pack.id}
 							key={index}
 							name={pack.name}
 							likesCount={pack.like_count}

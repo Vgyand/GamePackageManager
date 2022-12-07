@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import close from 'assets/icons/close.png'
 
 import { useDeletePackMutation } from 'store/packsApi'
@@ -5,7 +7,8 @@ import { useDeletePackMutation } from 'store/packsApi'
 import styles from './AdminTableItem.module.scss'
 
 const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
-	const [deletePost, response] = useDeletePackMutation()
+	const [openName, setOpenName] = useState(false)
+	const [deletePost] = useDeletePackMutation()
 	console.log(id)
 	return (
 		<tr
@@ -15,7 +18,18 @@ const AdminTableItem = ({ id, name, downloadCount, likeCount, index }: any) => {
 			}}
 		>
 			<td> {id}</td>
-			<td> {name}</td>
+			<td onDoubleClick={() => setOpenName(!openName)}>
+				{openName ? (
+					<input
+						onBlur={() => setOpenName(!openName)}
+						placeholder={name}
+						type="text"
+						autoFocus
+					/>
+				) : (
+					name
+				)}
+			</td>
 			<td> {downloadCount}</td>
 			<td> {likeCount}</td>
 			<button>

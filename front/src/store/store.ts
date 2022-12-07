@@ -18,11 +18,13 @@ import {
 import storage from 'redux-persist/lib/storage'
 
 import { filter } from './filterSlice'
+import { like } from './likedSlice'
 import { packsApi } from './packsApi'
 
 const rootReducer = combineReducers({
 	[packsApi.reducerPath]: packsApi.reducer,
 	filter,
+	like,
 	toastr: toastrReducer,
 })
 const persistConfig = {

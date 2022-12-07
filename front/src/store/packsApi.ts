@@ -54,6 +54,24 @@ export const packsApi = createApi({
 				}
 			},
 		}),
+		likePack: build.mutation({
+			query: ({ id }: any) => {
+				return {
+					method: 'put',
+					url: `packs/like/${id}`,
+					contentType: 'application/json',
+				}
+			},
+		}),
+		downloadPack: build.mutation({
+			query: ({ id }: any) => {
+				return {
+					method: 'put',
+					url: `packs/download/${id}`,
+					contentType: 'application/json',
+				}
+			},
+		}),
 		getMainPage: build.query({
 			query: () => {
 				return {
@@ -72,4 +90,6 @@ export const {
 	useCreateNewPackMutation,
 	useUpdatePackMutation,
 	useDeletePackMutation,
+	useDownloadPackMutation,
+	useLikePackMutation,
 } = packsApi
