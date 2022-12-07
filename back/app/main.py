@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from .DB_manipulations.db import db_init, session_init
 from fastapi import FastAPI
 from .models import resp_models, req_models
-from .DB_manipulations.db_initialization import insert_to_db, select_from_db, \
-    delete_from_db, add_like_to_package, add_download_to_package
+from .DB_manipulations.db_methods import insert_to_db, select_from_db, \
+    delete_from_db, add_like_to_package, add_download_to_package, update_values_of_package
 
 
 def app_factory():
@@ -94,30 +94,38 @@ async def create_package(pack_to_create: req_models.create_package):
     return result
 
 
-@app.delete('/api/packs/delete/{id}', response_model=resp_models.Message)
-async def delete_package(id):
+@app.delete('/api/packs/delete/{pack_id}', response_model=resp_models.Message)
+async def delete_package(pack_id):
     '''
     Receives id
     Deletes pack with this id
     '''
-    result = delete_from_db(SESSION, id)
+    result = delete_from_db(SESSION, pack_id)
     return result
 
 
 @app.put('/api/packs/like/{pack_id}', response_model=resp_models.Message)
 async def add_like_to_pack(pack_id: int):
+    '''
+    Add 1 like to package with certain id
+    '''
     result = add_like_to_package(SESSION, pack_id)
     return result
 
 
 @app.put('/api/packs/download/{pack_id}', response_model=resp_models.Message)
 async def add_download_to_pack(pack_id: int):
+    '''
+    Add 1 download to package with certain id
+    '''
     result = add_download_to_package(SESSION, pack_id)
     return result
 
 
-@app.put('/api/packs/')
-async def modify_package():
+@app.put('/api/packs/', response_model=resp_models.Message)
+async def modify_package(pack_to_update: req_models.update_package):
     '''
-    Whatever. Not implemented yet.
+    Modify the values of specified package
     '''
+    result = update_values_of_package(SESSION, pack_to_update)
+    return result

@@ -55,9 +55,7 @@ def select_from_db(session, dic):
     if dic['search'] is not None:
         Packages = Packages.filter(Pack.name.like(f"%{str(dic['search'])}%"))
 
-    for non in dic.values():
-        if non is not None:
-            break
+    if all(dic.values()) is None:
         Packages = Packages.order_by(Pack.id)
 
     for pack in Packages:
@@ -81,7 +79,7 @@ def delete_from_db(session, pack_id):
     '''
     Packages = session.query(Pack)
     for pack in Packages:
-        if pack.id == pack_id:
+        if str(pack.id) == pack_id:
             session.delete(pack)
             session.commit()
             return {'message': 'Done'}
@@ -110,6 +108,31 @@ def add_download_to_package(session, pack_id):
     if Packages:
         for pack in Packages:
             pack.download_count += 1
+            session.commit()
+        return {'message': 'Done'}
+    return {'message': 'Wrong Id'}
+
+
+def update_values_of_package(session, values_to_update):
+    '''
+    Receives values, id, values_to_update
+    Updates them in DB.
+    '''
+    Packages = session.query(Pack).filter(Pack.id == values_to_update.id).all()
+    if Packages:
+        for pack in Packages:
+            if values_to_update.name is not None:
+                pack.name = values_to_update.name
+
+            if values_to_update.description is not None:
+                pack.description = values_to_update.description
+
+            if values_to_update.download_link is not None:
+                pack.download_link = values_to_update.download_link
+
+            if values_to_update.size is not None:
+                pack.package_size = values_to_update.size
+
             session.commit()
         return {'message': 'Done'}
     return {'message': 'Wrong Id'}
