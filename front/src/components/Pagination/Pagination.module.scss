@@ -1,0 +1,16 @@
+.pagination {
+	display: flex;
+	li:not(:last-child) {
+		margin-right: 10px;
+	}
+	text-align: center;
+	justify-content: center;
+	color: white;
+}
+.active {
+	color: red;
+}
+.controls {
+	border: 1px solid red;
+	padding: 5px;
+}

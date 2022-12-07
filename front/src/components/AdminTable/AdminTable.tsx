@@ -12,7 +12,14 @@ import styles from './AdminTable.module.scss'
 const AdminTable = () => {
 	const [openForm, setOpenForm] = useState(false)
 	const filter = useAppSelector((state) => state.filter)
-	const { data = [], isLoading } = useGetAllPacksQuery(filter)
+
+	const {
+		data = [],
+		isLoading,
+		refetch,
+	} = useGetAllPacksQuery(filter, {
+		refetchOnMountOrArgChange: true,
+	})
 	console.log(data)
 	return (
 		<div>
@@ -21,7 +28,7 @@ const AdminTable = () => {
 					onClick={() => setOpenForm(!openForm)}
 					className={styles.admin_btn}
 				>
-					post
+					{openForm ? 'close' : 'open'}
 				</button>
 				{openForm ? <AdminPostForm /> : ''}
 				<table className={styles.admin_table}>
@@ -37,6 +44,7 @@ const AdminTable = () => {
 						<>
 							{data.map((pack: any, index: number) => (
 								<AdminTableItem
+									refetch={refetch}
 									index={index}
 									key={pack.id}
 									id={pack.id}
