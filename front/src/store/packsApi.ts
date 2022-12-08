@@ -9,14 +9,12 @@ export const packsApi = createApi({
 	}),
 	endpoints: (build) => ({
 		getAllPacks: build.query({
-			query: (filter: FilterState) => {
-				console.log(filter.search)
+			query: (filter?: FilterState) => {
 				const params: any = {}
-				console.log(params)
-				if (filter.search) params.search = filter.search
-				if (filter.downloads) params.downloads = filter.downloads
-				if (filter.likes) params.likes = filter.likes
-				if (filter.weight) params.weight = filter.weight
+				if (filter?.search) params.search = filter.search
+				if (filter?.downloads) params.downloads = filter.downloads
+				if (filter?.likes) params.likes = filter.likes
+				if (filter?.weight) params.weight = filter.weight
 				return {
 					method: 'GET',
 					url: 'packs',
@@ -72,6 +70,19 @@ export const packsApi = createApi({
 				}
 			},
 		}),
+		updatePacksName: build.mutation({
+			query: ({ id, name }: any) => {
+				return {
+					method: 'put',
+					url: `packs`,
+					contentType: 'application/json',
+					body: {
+						id: id,
+						name: name,
+					},
+				}
+			},
+		}),
 		getMainPage: build.query({
 			query: () => {
 				return {
@@ -92,4 +103,5 @@ export const {
 	useDeletePackMutation,
 	useDownloadPackMutation,
 	useLikePackMutation,
+	useUpdatePacksNameMutation,
 } = packsApi

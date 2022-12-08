@@ -1,5 +1,3 @@
-import randomColor from 'randomcolor'
-
 import Card from 'components/ui/Card/Card'
 import SkeletonLoader from 'components/ui/SkeletonLoader/SkeletonLoader'
 
@@ -22,7 +20,6 @@ const Content = ({ data, isError, refetch, isLoading }: any) => {
 							name={pack.name}
 							likesCount={pack.like_count}
 							downloadCount={pack.download_count}
-							color={randomColor()}
 						/>
 					))}
 				</>
