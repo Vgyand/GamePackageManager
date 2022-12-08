@@ -20,7 +20,7 @@ const AdminTable = () => {
 	} = useGetAllPacksQuery(filter, {
 		refetchOnMountOrArgChange: true,
 	})
-	console.log(data)
+
 	return (
 		<div>
 			<div className={styles.content}>

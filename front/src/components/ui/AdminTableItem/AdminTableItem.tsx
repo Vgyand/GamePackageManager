@@ -2,7 +2,10 @@ import { useState } from 'react'
 
 import close from 'assets/icons/close.png'
 
-import { useDeletePackMutation } from 'store/packsApi'
+import {
+	useDeletePackMutation,
+	useUpdatePacksNameMutation,
+} from 'store/packsApi'
 
 import styles from './AdminTableItem.module.scss'
 
@@ -16,12 +19,21 @@ const AdminTableItem = ({
 }: any) => {
 	const [openName, setOpenName] = useState(false)
 	const [deletePost] = useDeletePackMutation()
-	console.log(id)
+	const [updatePack] = useUpdatePacksNameMutation()
 
 	const deleteHandler = () => {
 		deletePost({ id })
 		refetch()
 	}
+	const updateName = (event: any) => {
+		console.log(event.target.value)
+		const result = confirm(`Change name ${name} to ${event.target.value}`)
+		console.log(result)
+		if (result) updatePack({ id, name: event.target.value })
+		refetch()
+		setOpenName(!openName)
+	}
+
 	return (
 		<tr
 			key={id}
@@ -29,15 +41,10 @@ const AdminTableItem = ({
 				backgroundColor: `${index % 2 == 0 ? 'grey' : 'white'}`,
 			}}
 		>
-			<td> {id}</td>
+			<td>{id}</td>
 			<td onDoubleClick={() => setOpenName(!openName)}>
 				{openName ? (
-					<input
-						onBlur={() => setOpenName(!openName)}
-						placeholder={name}
-						type="text"
-						autoFocus
-					/>
+					<input onBlur={updateName} placeholder={name} type="text" autoFocus />
 				) : (
 					name
 				)}

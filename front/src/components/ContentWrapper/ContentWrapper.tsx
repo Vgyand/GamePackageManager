@@ -11,7 +11,9 @@ import Content from './Content/Content'
 const ContentWrapper = () => {
 	const filter = useAppSelector((state) => state.filter)
 
-	const { data, isLoading, isError, refetch } = useGetAllPacksQuery(filter)
+	const { data, isLoading, isError, refetch } = useGetAllPacksQuery(filter, {
+		refetchOnMountOrArgChange: true,
+	})
 
 	const [currentPage, setCurrentPage] = useState(1)
 	const [cardsPerPage] = useState(10)
@@ -19,7 +21,7 @@ const ContentWrapper = () => {
 	const indexOfLastCard = currentPage * cardsPerPage
 	const indexOfFirdsCard = indexOfLastCard - cardsPerPage
 	const cards = data?.slice(indexOfFirdsCard, indexOfLastCard)
-
+	console.log(cards)
 	const paginate = (pageNumber: number) => {
 		setCurrentPage(pageNumber)
 	}
