@@ -10,7 +10,6 @@ from ..DB_manipulations.db_methods import insert_to_db, \
 # Add here the authentification into dependecies
 router = APIRouter(
     prefix='/api',
-    dependencies='Something',
 )
 
 
@@ -63,7 +62,7 @@ async def add_download_to_pack(pack_id: int):
 
 
 @router.put('/packs/', response_model=resp_models.Message)
-async def modify_package(pack_to_update: req_models.update_package):
+async def modify_package(pack_to_update: req_models.UpdatePackage):
     '''
     Modify the values of specified package
     '''

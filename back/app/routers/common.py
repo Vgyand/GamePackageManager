@@ -6,14 +6,14 @@ from ..DB_manipulations.db_methods import select_from_db
 
 router = APIRouter(
     prefix='/api',
-    dependencies='Something',
+
 )
 
 
 SESSION = session_init()
 
 
-@router.get('/api/packs/',
+@router.get('/packs/',
             response_model=resp_models.ListOfPackages,
             )
 async def recive_list_of_packages(

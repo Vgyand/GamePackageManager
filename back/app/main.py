@@ -1,12 +1,8 @@
-import random
-from .etc.randomstring import get_random_string
 from fastapi.middleware.cors import CORSMiddleware
 from .DB_manipulations.db import db_init
 from fastapi import FastAPI
-from .models import resp_models
-from .DB_manipulations.db_methods import insert_to_db, select_from_db
 
-from .routers import authet,  users
+from .routers import authet,  users, common
 
 
 def app_factory():
@@ -33,7 +29,7 @@ app.add_middleware(
 
 app.include_router(users.router)
 app.include_router(authet.router)
-
+app.include_router(common.router)
 
 # Needs to be removed later
 # @app.get('/api/fill_the_db/')
