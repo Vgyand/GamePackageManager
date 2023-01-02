@@ -1,15 +1,16 @@
 from fastapi import APIRouter
 from ..models import req_models, resp_models
-
+from fastapi import Depends
 from ..DB_manipulations.db import session_init
 from ..DB_manipulations.db_methods import insert_to_db, \
     delete_from_db, add_like_to_package, add_download_to_package, \
     update_values_of_package
+from ..dependence.mydepen import get_current_active_user
 
-
-# Add here the authentification into dependecies
 router = APIRouter(
     prefix='/api',
+    tags=['need to log in, user'],
+    dependencies=[Depends(get_current_active_user)]
 )
 
 
