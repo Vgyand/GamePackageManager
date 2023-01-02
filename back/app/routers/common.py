@@ -6,6 +6,7 @@ from ..DB_manipulations.db_methods import select_from_db
 
 router = APIRouter(
     prefix='/api',
+    tags=['available for any user'],
 
 )
 
