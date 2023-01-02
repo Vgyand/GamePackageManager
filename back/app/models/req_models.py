@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class create_package(BaseModel):
+class CreatePackage(BaseModel):
     # Stuff for adding a package to db
     name: str
     description: str
@@ -9,7 +9,7 @@ class create_package(BaseModel):
     size: float
 
 
-class update_package(BaseModel):
+class UpdatePackage(BaseModel):
     # Stuff for updating
     id: int
     name: str | None
