@@ -2,6 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 from ..etc.readyaml import read_config_yaml
+from abc import ABC, abstractmethod
 
 
 def get_engine(user, passwd, db):
@@ -28,5 +29,8 @@ def get_engine_from_yaml():
 
 
 def get_session(engine):
+    '''
+    Makes session
+    '''
     session = sessionmaker(bind=engine)()
     return session
