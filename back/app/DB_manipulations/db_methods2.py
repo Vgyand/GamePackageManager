@@ -63,7 +63,7 @@ class PackageManipulator(DB_Manipulator):
     def insert(self, pack_name, pack_description,
                pack_dl_url, like, download, pack_size):
         '''
-        Inserting package into DB
+        Inserts package into DB
         '''
         Pack_to_insert = Pack(
             name=pack_name,
@@ -78,7 +78,7 @@ class PackageManipulator(DB_Manipulator):
 
     def delete(self, pack_id):
         '''
-        Deleting packages from the DB
+        Deletes package from the DB
         '''
         Packages = self.session.query(Pack)
         for pack in Packages:
@@ -143,58 +143,44 @@ class UserManipulator(DB_Manipulator):
     def __init__(self, passed_session):
         self.session = passed_session
 
-    def select(self, dic):
+    def select(self):
         '''
-        Selecting users from DB depending on the requirements
+        Selecting users from DB
         '''
 
         users_to_return = []
 
         Users = self.session.query(User)
 
-        if dic['likes'] is not None:
-            if dic['likes'] == 'inc':
-                Users = Users.order_by(User.like_count)
+        Users = Users.order_by(User.id)
 
-            if dic['likes'] == 'dec':
-                print('we got here')
-                Users = Users.order_by(User.like_count.desc())
-
-        elif dic['downloads'] is not None:
-            if dic['downloads'] == 'inc':
-                Users = Users.order_by(User.download_count)
-            if dic['downloads'] == 'dec':
-                Users = Users.order_by(User.download_count.desc())
-
-        elif dic['size'] is not None:
-            if dic['size'] == 'inc':
-                Users = Users.order_by(User.Userage_size)
-            if dic['size'] == 'dec':
-                Users = Users.order_by(User.Userage_size.desc())
-
-        if dic['search'] is not None:
-            Users = Users.filter(
-                Pack.name.like(f"%{str(dic['search'])}%"))
-
-        if all(dic.values()) is None:
-            Users = Users.order_by(Pack.id)
-
-        for pack in Users:
-            pack_to_add = {}
-            pack_to_add['id'] = str(pack.id)
-            pack_to_add['uuid_id'] = str(pack.uuid_id)
-            pack_to_add['name'] = str(pack.name)
-            pack_to_add['description'] = str(pack.description)
-            pack_to_add['download_link'] = str(pack.download_link)
-            pack_to_add['like_count'] = str(pack.like_count)
-            pack_to_add['download_count'] = str(pack.download_count)
-            pack_to_add['package_size'] = str(pack.package_size)
-            users_to_return.append(pack_to_add)
+        for user in Users:
+            user_to_add = {}
+            user_to_add['id'] = str(user.id)
+            user_to_add['uuid_id'] = str(user.uuid_id)
+            user_to_add['username'] = str(user.username)
+            user_to_add['hashedpassword'] = str(user.hashedpassword)
+            users_to_return.append(user_to_add)
 
         return users_to_return
 
-    def insert(self):
-        pass
+    def insert(self, uusername, hhashedpassword):
+        '''Inserts user into DB'''
+        User_to_insert = User(
+            username=uusername,
+            hashedpassword=hhashedpassword,)
+        self.session.add(User_to_insert)
+        self.session.commit()
+        return {'message': 'Done'}
 
-    def delete(self):
-        pass
+    def delete(self, user_id):
+        '''
+        Deletes user from the DB
+        '''
+        Users = self.session.query(User)
+        for user in Users:
+            if str(user.id) == user_id:
+                self.session.delete(user)
+                self.session.commit()
+                return {'message': 'Done'}
+        return {'message': 'The package not found'}
