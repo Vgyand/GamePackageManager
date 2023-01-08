@@ -60,8 +60,8 @@ class PackageManipulator(DB_Manipulator):
 
         return packages_to_return
 
-    def insert_to_db(self, pack_name, pack_description,
-                     pack_dl_url, like, download, pack_size):
+    def insert(self, pack_name, pack_description,
+               pack_dl_url, like, download, pack_size):
         '''
         Inserting package into DB
         '''
@@ -76,8 +76,67 @@ class PackageManipulator(DB_Manipulator):
         self.session.commit()
         return {'message': 'Done'}
 
-    def delete(self):
-        pass
+    def delete(self, pack_id):
+        '''
+        Deleting packages from the DB
+        '''
+        Packages = self.session.query(Pack)
+        for pack in Packages:
+            if str(pack.id) == pack_id:
+                self.session.delete(pack)
+                self.session.commit()
+                return {'message': 'Done'}
+        return {'message': 'The package not found'}
+
+    def add_like_to_package(self, pack_id):
+        '''
+        Adds like to package specified by id
+        '''
+        Packages = self.session.query(Pack).filter(Pack.id == pack_id).all()
+        if Packages:
+            for pack in Packages:
+
+                pack.like_count += 1
+                self.session.commit()
+            return {'message': 'Done'}
+        return {'message': 'Wrong Id'}
+
+    def add_download_to_package(self, pack_id):
+        '''
+        Adds download to package specified by id
+        '''
+        Packages = self.session.query(Pack).filter(Pack.id == pack_id).all()
+        if Packages:
+            for pack in Packages:
+                pack.download_count += 1
+                self.session.commit()
+            return {'message': 'Done'}
+        return {'message': 'Wrong Id'}
+
+    def update_values_of_package(self, values_to_update):
+        '''
+        Receives values, id, values_to_update
+        Updates them in DB.
+        '''
+        Packages = self.session.query(Pack).filter(
+            Pack.id == values_to_update.id).all()
+        if Packages:
+            for pack in Packages:
+                if values_to_update.name is not None:
+                    pack.name = values_to_update.name
+
+                if values_to_update.description is not None:
+                    pack.description = values_to_update.description
+
+                if values_to_update.download_link is not None:
+                    pack.download_link = values_to_update.download_link
+
+                if values_to_update.size is not None:
+                    pack.package_size = values_to_update.size
+
+                self.session.commit()
+            return {'message': 'Done'}
+        return {'message': 'Wrong Id'}
 
 
 class UserManipulator(DB_Manipulator):
@@ -87,32 +146,31 @@ class UserManipulator(DB_Manipulator):
     def select(self, dic):
         '''
         Selecting users from DB depending on the requirements
-        kwargs can be: package_name, like_count, download_count, page_number
         '''
 
         users_to_return = []
 
-        Users = self.session.query(Pack)
+        Users = self.session.query(User)
 
         if dic['likes'] is not None:
             if dic['likes'] == 'inc':
-                Users = Users.order_by(Pack.like_count)
+                Users = Users.order_by(User.like_count)
 
             if dic['likes'] == 'dec':
                 print('we got here')
-                Users = Users.order_by(Pack.like_count.desc())
+                Users = Users.order_by(User.like_count.desc())
 
         elif dic['downloads'] is not None:
             if dic['downloads'] == 'inc':
-                Users = Users.order_by(Pack.download_count)
+                Users = Users.order_by(User.download_count)
             if dic['downloads'] == 'dec':
-                Users = Users.order_by(Pack.download_count.desc())
+                Users = Users.order_by(User.download_count.desc())
 
         elif dic['size'] is not None:
             if dic['size'] == 'inc':
-                Users = Users.order_by(Pack.package_size)
+                Users = Users.order_by(User.Userage_size)
             if dic['size'] == 'dec':
-                Users = Users.order_by(Pack.package_size.desc())
+                Users = Users.order_by(User.Userage_size.desc())
 
         if dic['search'] is not None:
             Users = Users.filter(
