@@ -1,4 +1,4 @@
-from db_abstract import DB_Manipulator
+from .db_abstract import DB_Manipulator
 from .db import Pack, User
 from sqlalchemy import BigInteger, Boolean, Column, \
     ForeignKey, Integer, String, Enum, Float, \

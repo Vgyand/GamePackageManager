@@ -2,10 +2,8 @@ from fastapi import APIRouter
 from ..models import req_models, resp_models
 from fastapi import Depends
 from ..DB_manipulations.db import session_init
-from ..DB_manipulations.db_methods import insert_to_db, \
-    delete_from_db, add_like_to_package, add_download_to_package, \
-    update_values_of_package
 from ..dependence.mydepen import get_current_active_user
+from ..DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
 
 router = APIRouter(
     prefix='/api',
@@ -15,6 +13,8 @@ router = APIRouter(
 
 
 SESSION = session_init()
+PACKAGEMANIPULATOR = PackageManipulator(SESSION)
+USERMANIPULATOR = UserManipulator(SESSION)
 
 
 @router.post('/packs/', response_model=resp_models.Message)
@@ -23,8 +23,7 @@ async def create_package(pack_to_create: req_models.CreatePackage):
     Receives parameters:
     name, description, download_link
     '''
-    result = insert_to_db(
-        SESSION,
+    result = PACKAGEMANIPULATOR.insert(
         pack_to_create.name,
         pack_to_create.description,
         pack_to_create.download_link,
@@ -40,7 +39,7 @@ async def delete_package(pack_id):
     Receives id
     Deletes pack with this id
     '''
-    result = delete_from_db(SESSION, pack_id)
+    result = PACKAGEMANIPULATOR.delete(pack_id)
     return result
 
 
@@ -49,7 +48,7 @@ async def add_like_to_pack(pack_id: int):
     '''
     Add 1 like to package with certain id
     '''
-    result = add_like_to_package(SESSION, pack_id)
+    result = PACKAGEMANIPULATOR.add_like_to_package(pack_id)
     return result
 
 
@@ -58,7 +57,7 @@ async def add_download_to_pack(pack_id: int):
     '''
     Add 1 download to package with certain id
     '''
-    result = add_download_to_package(SESSION, pack_id)
+    result = PACKAGEMANIPULATOR.add_download_to_package(pack_id)
     return result
 
 
@@ -67,5 +66,5 @@ async def modify_package(pack_to_update: req_models.UpdatePackage):
     '''
     Modify the values of specified package
     '''
-    result = update_values_of_package(SESSION, pack_to_update)
+    result = PACKAGEMANIPULATOR.update_values_of_package(pack_to_update)
     return result
