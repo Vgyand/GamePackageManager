@@ -28,5 +28,8 @@ def get_engine_from_yaml():
 
 
 def get_session(engine):
+    '''
+    Makes session
+    '''
     session = sessionmaker(bind=engine)()
     return session
