@@ -7,10 +7,19 @@ from ..etc.readyaml import read_config_yaml
 from ..models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+from ..DB_manipulations.db import session_init
+from ..DB_manipulations.db_methods2 import UserManipulator
+
 
 ALGIRITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 SECRET_KEY = read_config_yaml()['secret_key']
+
+SESSION = session_init()
+USERMANIPULATOR = UserManipulator(SESSION)
+
+list_of_users = USERMANIPULATOR.select()
+
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='api/token')

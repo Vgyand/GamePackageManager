@@ -2,8 +2,6 @@ from fastapi import APIRouter
 from ..models import resp_models
 
 from ..DB_manipulations.db import session_init
-from ..DB_manipulations.db_methods import select_from_db
-
 from ..DB_manipulations.db_methods2 import PackageManipulator
 
 router = APIRouter(
@@ -14,6 +12,7 @@ router = APIRouter(
 
 
 SESSION = session_init()
+DBMANIPULATOR = PackageManipulator(SESSION)
 
 
 @router.get('/packs/',
@@ -34,6 +33,5 @@ async def recive_list_of_packages(
            'size': size
            }
 
-    selector = PackageManipulator(SESSION)
-    package_list = selector.select(dic)
+    package_list = DBMANIPULATOR.select(dic)
     return package_list
