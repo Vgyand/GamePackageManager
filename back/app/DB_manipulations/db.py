@@ -25,9 +25,10 @@ class Pack(BASE):
 
 class User(BASE):
     __tablename__ = 'User'
-    name = Column(String, nullable=False)
+
     id = Column(Integer, Identity(start=1, cycle=True),
                 nullable=False, unique=True)
+
     uuid_id = Column(UUID(as_uuid=True), primary_key=True,
                      default=uuid.uuid4, nullable=False, unique=True)
     username = Column(String, nullable=False)

@@ -6,7 +6,6 @@ from passlib.context import CryptContext
 from ..etc.readyaml import read_config_yaml
 from ..models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
 from ..DB_manipulations.db import session_init
 from ..DB_manipulations.db_methods2 import UserManipulator
 

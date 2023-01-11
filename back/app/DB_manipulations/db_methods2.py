@@ -151,9 +151,6 @@ class UserManipulator(DB_Manipulator):
         users_to_return = {}
 
         Users = self.session.query(User)
-
-        Users = Users.order_by(User.id)
-
         for user in Users:
             print(str(user.id))
             user_to_add = {}

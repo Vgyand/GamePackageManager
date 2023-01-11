@@ -4,6 +4,9 @@ from ..models import resp_models
 from ..DB_manipulations.db import session_init
 from ..DB_manipulations.db_methods2 import PackageManipulator
 
+from ..etc.randomstring import get_random_string
+import random
+
 router = APIRouter(
     prefix='/api',
     tags=['no login'],
@@ -35,3 +38,17 @@ async def recive_list_of_packages(
 
     package_list = DBMANIPULATOR.select(dic)
     return package_list
+
+
+@router.get('/fill the db/')
+async def fill():
+    '''Weird bad solution used to fill the empty DB'''
+    for i in range(1, 40):
+        name = get_random_string()
+        desc = get_random_string()
+        link = f'https://{get_random_string()}'
+        like = random.randint(1, 100)
+        download = random.randint(1, 100)
+        size = round(random.uniform(1.0, 50.0), 2)
+        DBMANIPULATOR.insert(name, desc, link, like, download, size)
+    return {'message': 'Done'}
