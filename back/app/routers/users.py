@@ -13,8 +13,8 @@ router = APIRouter(
 
 
 SESSION = session_init()
+
 PACKAGEMANIPULATOR = PackageManipulator(SESSION)
-USERMANIPULATOR = UserManipulator(SESSION)
 
 
 @router.post('/packs/', response_model=resp_models.Message)

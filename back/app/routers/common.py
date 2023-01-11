@@ -2,9 +2,10 @@ from fastapi import APIRouter
 from ..models import resp_models
 
 from ..DB_manipulations.db import session_init
-from ..DB_manipulations.db_methods import select_from_db
+from ..DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
 
-from ..DB_manipulations.db_methods2 import PackageManipulator
+from ..etc.randomstring import get_random_string
+import random
 
 router = APIRouter(
     prefix='/api',
@@ -14,6 +15,8 @@ router = APIRouter(
 
 
 SESSION = session_init()
+DBMANIPULATOR = PackageManipulator(SESSION)
+DBUSERMANIPULATOR = UserManipulator(SESSION)
 
 
 @router.get('/packs/',
@@ -34,6 +37,26 @@ async def recive_list_of_packages(
            'size': size
            }
 
-    selector = PackageManipulator(SESSION)
-    package_list = selector.select(dic)
+    package_list = DBMANIPULATOR.select(dic)
     return package_list
+
+
+@router.get('/fill_the_db/')
+async def fill():
+    '''Weird bad solution used to fill the empty DB'''
+    for i in range(1, 40):
+        name = get_random_string()
+        desc = get_random_string()
+        link = f'https://{get_random_string()}'
+        like = random.randint(1, 100)
+        download = random.randint(1, 100)
+        size = round(random.uniform(1.0, 50.0), 2)
+        DBMANIPULATOR.insert(name, desc, link, like, download, size)
+
+    try:
+        DBUSERMANIPULATOR.insert(
+            "Admin", "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW")
+    except:
+        print('well')
+        return {'message': 'Done'}
+    return {'message': 'Done'}

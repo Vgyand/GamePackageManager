@@ -6,13 +6,15 @@ from .routers import authet,  users, common
 
 
 def app_factory():
+    '''Creates the database, if does not exists, returns a FastAPI object to run the app'''
     db_init()
     return FastAPI()
 
 
 app = app_factory()
 
-
+# From where you can send requests to the app
+# Doesn't work yet for the test purposes
 origins = [
     "http://localhost:3000",
     "localhost:3000"
@@ -27,19 +29,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+# Add routes to the FastAPI app.
 app.include_router(users.router)
 app.include_router(authet.router)
 app.include_router(common.router)
-
-# Needs to be removed later
-# @app.get('/api/fill_the_db/')
-# async def fill_db():
-#     for i in range(1, 40):
-#         name = get_random_string()
-#         desc = get_random_string()
-#         link = f'https://{get_random_string()}'
-#         like = random.randint(1, 100)
-#         download = random.randint(1, 100)
-#         size = round(random.uniform(1.0, 50.0), 2)
-#         insert_to_db(SESSION, name, desc, link, like, download, size)
-#     return {'message': 'Done'}

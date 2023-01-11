@@ -6,22 +6,22 @@ from passlib.context import CryptContext
 from ..etc.readyaml import read_config_yaml
 from ..models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from ..DB_manipulations.db import session_init
+from ..DB_manipulations.db_methods2 import UserManipulator
 
 
 ALGIRITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 SECRET_KEY = read_config_yaml()['secret_key']
 
+SESSION = session_init()
+USERMANIPULATOR = UserManipulator(SESSION)
+
+list_of_users = USERMANIPULATOR.select()
+
+
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='api/token')
-
-fake_users_db = {
-    "Admin": {
-        "username": "Admin",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    }
-}
 
 
 def verify_password(plain_password, hashed_password):
@@ -35,11 +35,17 @@ def get_password_hash(password):
 def get_user(db, username: str):
     if username in db:
         user_dict = db[username]
+
+        user_dict = {
+            'hashed_password': user_dict['hashedpassword'],
+            'username': user_dict['username'],
+        }
+        print('--------------------------', user_dict)
         return UserInDB(**user_dict)
 
 
-def authenticate_user(fake_db, username: str, password: str):
-    user = get_user(fake_db, username)
+def authenticate_user(db_of_users, username: str, password: str):
+    user = get_user(db_of_users, username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -72,7 +78,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
+    user = get_user(list_of_users, username=token_data.username)
     if user is None:
         raise credentials_exception
     return user

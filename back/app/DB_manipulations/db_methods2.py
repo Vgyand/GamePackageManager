@@ -148,19 +148,18 @@ class UserManipulator(DB_Manipulator):
         Selecting users from DB
         '''
 
-        users_to_return = []
+        users_to_return = {}
 
         Users = self.session.query(User)
-
-        Users = Users.order_by(User.id)
-
         for user in Users:
+            print(str(user.id))
             user_to_add = {}
             user_to_add['id'] = str(user.id)
             user_to_add['uuid_id'] = str(user.uuid_id)
             user_to_add['username'] = str(user.username)
             user_to_add['hashedpassword'] = str(user.hashedpassword)
-            users_to_return.append(user_to_add)
+            user_to_add['disabled'] = str(user.disabled)
+            users_to_return[str(user.username)] = user_to_add
 
         return users_to_return
 

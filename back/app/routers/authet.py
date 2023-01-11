@@ -8,10 +8,19 @@ from ..etc.readyaml import read_config_yaml
 from ..models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from ..dependence import mydepen
+from ..DB_manipulations.db import session_init
+from ..DB_manipulations.db_methods2 import UserManipulator
 
 ALGIRITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 SECRET_KEY = read_config_yaml()['secret_key']
+
+
+SESSION = session_init()
+USERMANIPULATOR = UserManipulator(SESSION)
+
+list_of_users = USERMANIPULATOR.select()
+
 
 router = APIRouter(
     prefix='/api',
@@ -19,20 +28,12 @@ router = APIRouter(
     responses={404: {'desctiption': 'Not Found'}},
 )
 
-fake_users_db = {
-    "Admin": {
-        "username": "Admin",
-        "full_name": "Admin",
-        "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
-        "disabled": False,
-    }
-}
-
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    '''Returns JWT token when passed login and password'''
     user = mydepen.authenticate_user(
-        fake_users_db, form_data.username, form_data.password)
+        list_of_users, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -4,15 +4,10 @@ pg_user: postgres
 db_passwd: postgres
 pg_name: postgres
 
-# For admin user|not implemented yet
-admin_login: admin
-admin_ps: possession
-
-# Stuff for main page
-side_link: whatever
 
 # Secret key for JWT
 secret_key: 124sajajfgSAf12astASt21y61243sdg21y210wqt12DGBDBDBskdcaa1y12DDASlLJO 
 
-# Command to activate that shit
+# Command to activate that stuff
 # uvicorn app.main:app --reload
+
