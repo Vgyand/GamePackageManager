@@ -24,7 +24,7 @@ class Pack(BASE):
 
 
 class User(BASE):
-    __tablename__ = 'User'
+    __tablename__ = 'Users'
 
     id = Column(Integer, Identity(start=1, cycle=True),
                 nullable=False, unique=True)
