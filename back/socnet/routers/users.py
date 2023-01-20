@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from ..models import req_models, resp_models
+from socnet.models import req_models, resp_models
 from fastapi import Depends
-from ..DB_manipulations.db import session_init
-from ..dependence.mydepen import get_current_active_user
-from ..DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
+from socnet.DB_manipulations.db import session_init
+from socnet.dependence.mydepen import get_current_active_user
+from socnet.DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
 
 router = APIRouter(
     prefix='/api',
