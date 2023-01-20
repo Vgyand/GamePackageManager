@@ -1,8 +1,8 @@
 from fastapi.middleware.cors import CORSMiddleware
-from socnet.DB_manipulations.db import db_init
+from packagemanager.DB_manipulations.db import db_init
 from fastapi import FastAPI
 
-from socnet.routers import authet,  users, common
+from packagemanager.routers import authet,  users, common
 
 
 def app_factory():

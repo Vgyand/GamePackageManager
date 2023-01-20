@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
-from socnet.etc.readyaml import read_config_yaml
+from packagemanager.etc.readyaml import read_config_yaml
 
 
 def get_engine(user, passwd, db):

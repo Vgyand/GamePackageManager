@@ -4,12 +4,12 @@ from fastapi import APIRouter
 from fastapi import Depends, HTTPException, status
 
 from passlib.context import CryptContext
-from socnet.etc.readyaml import read_config_yaml
-from socnet.models.auth_models import Token, TokenData, User, UserInDB
+from packagemanager.etc.readyaml import read_config_yaml
+from packagemanager.models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordRequestForm
-from socnet.dependence import mydepen
-from socnet.DB_manipulations.db import session_init
-from socnet.DB_manipulations.db_methods2 import UserManipulator
+from packagemanager.dependence import mydepen
+from packagemanager.DB_manipulations.db import session_init
+from packagemanager.DB_manipulations.db_methods2 import UserManipulator
 
 ALGIRITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

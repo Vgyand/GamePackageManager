@@ -3,11 +3,11 @@ from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from socnet.etc.readyaml import read_config_yaml
-from socnet.models.auth_models import Token, TokenData, User, UserInDB
+from packagemanager.etc.readyaml import read_config_yaml
+from packagemanager.models.auth_models import Token, TokenData, User, UserInDB
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from socnet.DB_manipulations.db import session_init
-from socnet.DB_manipulations.db_methods2 import UserManipulator
+from packagemanager.DB_manipulations.db import session_init
+from packagemanager.DB_manipulations.db_methods2 import UserManipulator
 
 
 ALGIRITHM = 'HS256'

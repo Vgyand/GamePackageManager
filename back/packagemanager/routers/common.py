@@ -1,10 +1,10 @@
 from fastapi import APIRouter
-from socnet.models import resp_models
+from packagemanager.models import resp_models
 
-from socnet.DB_manipulations.db import session_init
-from socnet.DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
+from packagemanager.DB_manipulations.db import session_init
+from packagemanager.DB_manipulations.db_methods2 import PackageManipulator, UserManipulator
 
-from socnet.etc.randomstring import get_random_string
+from packagemanager.etc.randomstring import get_random_string
 import random
 
 router = APIRouter(

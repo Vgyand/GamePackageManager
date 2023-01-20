@@ -1,7 +1,7 @@
 [project]
-name = "socnet"
+name = "packagemanager"
 version = "0.1.0"
-description = "simple social network made on FastAPI"
+description = "package storage"
 authors = [
     {name = "ReRubis", email = "slesarenkod@gmail.com"},
 ]
