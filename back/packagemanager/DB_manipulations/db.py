@@ -1,6 +1,6 @@
 import uuid
 
-from .db_session import get_engine_from_yaml, get_session
+from packagemanager.DB_manipulations.db_session import get_engine_from_yaml, get_session
 from sqlalchemy import Column, Integer, String, Float, Boolean, UniqueConstraint, Identity
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import UUID

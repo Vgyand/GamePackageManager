@@ -1,4 +1,4 @@
-from .db import Pack
+from packagemanager.DB_manipulations.db import Pack
 from sqlalchemy import BigInteger, Boolean, Column, \
     ForeignKey, Integer, String, Enum, Float, \
     UniqueConstraint, and_, func, Date, DateTime, desc
